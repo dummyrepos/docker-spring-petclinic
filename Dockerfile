@@ -6,6 +6,8 @@ RUN mvn package
 # this will create a spring petclinic jar file
 
 
-
-# FROM eclipse-temurin:17-jre As runner
-# COPY --from=builder /spc/target/spring-petclinic dest
+FROM eclipse-temurin:17-jre AS runner
+COPY --from=builder --chown=ubuntu /spc/target/spring-petclinic-3.3.0-SNAPSHOT.jar /app/spring-petclinic.jar
+WORKDIR /app
+EXPOSE 8080
+CMD ["java", "-jar", "spring-petclinic.jar"]
